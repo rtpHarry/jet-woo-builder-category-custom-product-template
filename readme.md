@@ -5,6 +5,8 @@ level.
 Adds new configuration fields to the WooCommerce Product Category admin
 pages to select a category wide product single template.
 
+<img width="812" alt="image" src="https://user-images.githubusercontent.com/1038062/182481658-727e05a9-ba95-48e0-8c62-a404e1450090.png">
+
 # Usage
 Install the plugin and activate it.
 
