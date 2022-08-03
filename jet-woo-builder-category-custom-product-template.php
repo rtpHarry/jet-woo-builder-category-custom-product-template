@@ -50,6 +50,10 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
      * @thanks https://stackoverflow.com/questions/15303031/woocommerce-get-category-for-product-page/15334415#15334415
      */
     public function runthings_custom_woo_product_template( $template ) {
+        if(!is_product()) {
+            return $template;
+        }
+
         global $product;
         $id = $product->get_id();
 
