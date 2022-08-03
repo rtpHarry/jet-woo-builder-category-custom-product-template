@@ -26,6 +26,9 @@ Download and contribute issues at:
 https://github.com/rtpHarry/jet-woo-builder-category-custom-product-template
 
 # Changelog
+1.0.1 - 3 August 2022
+  - Bugfix - Only attempt to modify template on product single pages
+
 1.0.0 - 2 August 2022
   - Initial release
 
