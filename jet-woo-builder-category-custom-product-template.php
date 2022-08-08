@@ -113,7 +113,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
             <tbody>
                 <tr class="form-field term-runthings-jetwoobuilder-template-id-wrap">
                     <th scope="row">
-                        <label for="runthings-jetwoobuilder-template-id"><?php _e( 'Template', 'runthings_jetwoobuilder_category_template' );?></label>
+                        <label for="runthings-jetwoobuilder-template-id"><?php _e( 'Product Template', 'runthings_jetwoobuilder_category_template' );?></label>
                     </th>
                     <td>
                         <select name="runthings-jetwoobuilder[template-id]" id="runthings-jetwoobuilder-template-id" class="postform">
@@ -125,6 +125,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
                             }
                             ?>
                         </select>
+                        <p class="description"><?php esc_html_e('Select the product template to use for products in this taxonomy.', 'runthings_jetwoobuilder_category_template'); ?></p>
                     </td>
                 </tr>   
                 <tr class="form-field term-runthings-jetwoobuilder-priority-wrap">
@@ -146,30 +147,27 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
     /**
      * Add in a taxonomy field template add option
      * 
-     * @note only difference between edit and add is that edit uses div and add uses tr
      * @thanks https://stackoverflow.com/questions/33907177/add-custom-taxonomy-metadata-field-to-wordpress/36200866#36200866
      * @thanks https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/
      */
     public function taxonomy_product_cat_custom_fields_add ( $term ) {
-        $selected_template_id = get_term_meta( $term->term_id, 'runthings-jetwoobuilder-template-id', true );
-        $priority = get_term_meta( $term->term_id, 'runthings-jetwoobuilder-priority', true );
         ?>
         <?php $this->echo_intro_text(); ?>
         <div class="form-field term-runthings-jetwoobuilder-template-id-wrap">
-            <label for="runthings-jetwoobuilder-template-id"><?php _e( 'Template', 'runthings_jetwoobuilder_category_template' );?></label>
+            <label for="runthings-jetwoobuilder-template-id"><?php _e( 'Product Template', 'runthings_jetwoobuilder_category_template' );?></label>
             <select name="runthings-jetwoobuilder[template-id]" id="runthings-jetwoobuilder-template-id" class="postform">
                 <?php 
                 $templates = $this->get_single_templates();
                 foreach ($templates as $template_id => $template_name) {
-                    $selected = ($selected_template_id == $template_id ? "selected" : "");
-                    ?><option <?php echo $selected; ?> value="<?php echo $template_id; ?>"><?php esc_html_e($template_name, 'runthings_jetwoobuilder_category_template'); ?></option><?php
+                    ?><option value="<?php echo $template_id; ?>"><?php esc_html_e($template_name, 'runthings_jetwoobuilder_category_template'); ?></option><?php
                 }
                 ?>
             </select>
+            <p class="description"><?php esc_html_e('Select the product template to use for products in this taxonomy.', 'runthings_jetwoobuilder_category_template'); ?></p>
         </div>   
         <div class="form-field term-runthings-jetwoobuilder-priority-wrap">
             <label for="runthings_jetwoobuilder_priority"><?php _e( 'Template Priority', 'runthings_jetwoobuilder_category_template' );?></label>
-            <input name="runthings-jetwoobuilder[priority]" id="runthings_jetwoobuilder_priority" type="number" value="<?php echo $priority; ?>" size="40" />
+            <input name="runthings-jetwoobuilder[priority]" id="runthings_jetwoobuilder_priority" type="number" size="40" />
             <p class="description"><?php esc_html_e('Default priority is 0.', 'runthings_jetwoobuilder_category_template'); ?></p>
         </div>
         <?php
