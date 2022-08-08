@@ -25,7 +25,21 @@ Download and contribute issues at:
 
 https://github.com/rtpHarry/jet-woo-builder-category-custom-product-template
 
+# Known Issues
+The sorting on the admin columns only works if the meta key exists on that 
+term. This means that if the term already existed before the plugin was
+activated, and you haven't edited the term since then, when you use the
+sort options, these terms will disappear from view. I plan to implement
+an activating hook in an upcoming version to fix this.
+
 # Changelog
+1.1.0 - 8 August 2022
+  - Improve wording of field labels to clarify that it is the product 
+    template being assigned.
+  - Implement admin column in the manage screen for product template
+  - Implement admin column in the manage screen for template priority
+  - Make the new admin columns sortable
+
 1.0.1 - 3 August 2022
   - Bugfix - Only attempt to modify template on product single pages
 
