@@ -36,11 +36,19 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
 
     public function __construct()
     {
-        add_filter( 'jet-woo-builder/custom-single-template', [$this, 'runthings_custom_woo_product_template']);
+        // override template
+        add_filter( 'jet-woo-builder/custom-single-template', [$this, 'runthings_custom_woo_product_template'] );
+
+        // insert fields ui into add / edit taxonomy pages
         add_action( "product_cat_edit_form_fields", [$this, 'taxonomy_product_cat_custom_fields_edit'] );
         add_action( "product_cat_add_form_fields", [$this, 'taxonomy_product_cat_custom_fields_add'] );
-        add_action( 'edited_product_cat', [$this, 'taxonomy_product_cat_custom_fields_save'], 10, 2);
-        add_action( 'created_product_cat', [$this, 'taxonomy_product_cat_custom_fields_save'], 10, 2);
+        add_action( 'edited_product_cat', [$this, 'taxonomy_product_cat_custom_fields_save'], 10, 2 );
+        add_action( 'created_product_cat', [$this, 'taxonomy_product_cat_custom_fields_save'], 10, 2 );
+
+        // insert custom columns into listing
+        add_filter( 'manage_edit-product_cat_columns', [$this, 'manage_edit_columns'] );
+        add_filter( 'manage_product_cat_custom_column', [$this, 'manage_edit_columns_content_product_template'], 10, 3 );
+        add_filter( 'manage_product_cat_custom_column', [$this, 'manage_edit_columns_content_product_template_priority'], 10, 3 );
     }
 
     /**
@@ -198,6 +206,58 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
         }
     }
 
+    /**
+     * Add the custom column to the taxonomy management page
+     * 
+     * @since 2.1.0
+     */
+    public function manage_edit_columns( $columns ){
+        $columns['product_template'] = __( 'Product Template', 'runthings_jetwoobuilder_category_template' );
+        $columns['product_template_priority'] = __( 'Product Template Priority', 'runthings_jetwoobuilder_category_template' );
+        return $columns;
+    }
+
+    /**
+     * Add the custom column content to the taxonomy management page
+     * 
+     * @since 2.1.0
+     */
+    public function manage_edit_columns_content_product_template( $content, $column_name, $term_id ){
+        if( $column_name !== 'product_template' ){
+            return $content;
+        }
+
+        $term_id = absint( $term_id );
+        $term_meta = get_term_meta( $term_id, 'runthings-jetwoobuilder-template-id', true );
+
+        if( !empty( $term_meta ) ){
+            $content .= esc_attr( get_the_title($term_meta) );
+        } else {
+            $content .= "<em>(Default)</em>";
+        }
+
+        return $content;
+    }
+
+    /**
+     * Add the custom column content to the taxonomy management page
+     * 
+     * @since 2.1.0
+     */
+    public function manage_edit_columns_content_product_template_priority( $content, $column_name, $term_id ){
+        if( $column_name !== 'product_template_priority' ){
+            return $content;
+        }
+
+        $term_id = absint( $term_id );
+        $term_meta = get_term_meta( $term_id, 'runthings-jetwoobuilder-priority', true );
+
+        if( !empty( $term_meta ) ){
+            $content .= esc_attr( $term_meta );
+        }
+
+        return $content;
+    }
     /** 
      * Get an array of all available Jet Woo Builder templates
      */
