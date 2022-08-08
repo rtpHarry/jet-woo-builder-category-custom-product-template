@@ -49,6 +49,8 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
         add_filter( 'manage_edit-product_cat_columns', [$this, 'manage_edit_columns'] );
         add_filter( 'manage_product_cat_custom_column', [$this, 'manage_edit_columns_content_product_template'], 10, 3 );
         add_filter( 'manage_product_cat_custom_column', [$this, 'manage_edit_columns_content_product_template_priority'], 10, 3 );
+        add_filter( 'manage_edit-product_cat_sortable_columns', [$this, 'manage_sortable_columns'] );
+        add_filter( 'terms_clauses', [$this, 'modify_orderby_query'], 10, 3 );
     }
 
     /**
@@ -258,6 +260,56 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
 
         return $content;
     }
+
+    /**
+     * Enable sortable functionality for the custom columns
+     * 
+     * @since 2.1.0
+     * @source https://code.tutsplus.com/articles/quick-tip-make-your-custom-column-sortable--wp-25095
+     */
+    public function manage_sortable_columns( $sortable ){
+        $sortable[ 'product_template' ] = 'runthings-jetwoobuilder-template-id';
+        $sortable[ 'product_template_priority' ] = 'runthings-jetwoobuilder-priority';
+        return $sortable;
+    }
+
+    /**
+     * Modify ordervy query to support the sortable columns
+     * 
+     * @since 2.1.0
+     * @source https://wordpress.org/support/topic/sorting-by-custom-taxonomy-field/#post-14085241
+     */
+    function modify_orderby_query( $pieces, $taxonomies, $args ) {      
+        global $pagenow, $wpdb;
+
+        $tax_name = 'product_cat';
+
+        $orderby = ( isset( $_GET[ 'orderby' ] ) ) ? trim( sanitize_text_field( $_GET[ 'orderby' ] ) ) : '';
+        if ( empty( $orderby ) ) { return $pieces; }
+
+        $taxonomy = $taxonomies[ 0 ];
+
+        if ( ! is_admin() || 'edit-tags.php' !== $pagenow || ! in_array( $taxonomy, [ $tax_name ] ) ) {
+            return $pieces;
+        }
+
+        $field_name = 'runthings-jetwoobuilder-template-id';
+        if ( $field_name === $orderby ) {
+            $pieces[ 'join' ] .= ' INNER JOIN ' . $wpdb->termmeta . ' AS tm ON t.term_id = tm.term_id ';
+            $pieces[ 'orderby' ]  = ' ORDER BY tm.meta_value ';
+            $pieces[ 'where' ] .= ' AND tm.meta_key = "'.$field_name.'"';
+        }
+
+        $field_name = 'runthings-jetwoobuilder-priority';
+        if ( $field_name === $orderby ) {
+            $pieces[ 'join' ] .= ' INNER JOIN ' . $wpdb->termmeta . ' AS tm ON t.term_id = tm.term_id ';
+            $pieces[ 'orderby' ]  = ' ORDER BY tm.meta_value ';
+            $pieces[ 'where' ] .= ' AND tm.meta_key = "'.$field_name.'"';
+        }
+
+        return $pieces;
+    }
+
     /** 
      * Get an array of all available Jet Woo Builder templates
      */
