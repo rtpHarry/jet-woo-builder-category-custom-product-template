@@ -4,7 +4,7 @@
 Plugin Name: JetWooBuilder - Category Custom Product Template
 Plugin URI: https://runthings.dev
 Description: Apply a custom JetWooBuilder product template at the WooCommerce category level
-Version: 1.0.1
+Version: 1.1.0
 Author: Matthew Harris, runthings.dev
 Author URI: https://runthings.dev/
 License: GPLv3 or later
