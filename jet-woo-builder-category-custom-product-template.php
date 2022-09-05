@@ -73,7 +73,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
 
         $terms = get_the_terms( $id, 'product_cat' );
 
-        $template_id = $this->NO_TEMPLATE_SET;
+        $template_id = self::NO_TEMPLATE_SET;
         $priority = 0;
 
         foreach ($terms as $term) {
@@ -82,7 +82,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
             if ($meta_template_id !== '') {
                 $meta_priority =  get_term_meta($term->term_id, 'runthings-jetwoobuilder-priority', true);
 
-                if($template_id == $this->NO_TEMPLATE_SET) {
+                if($template_id == self::NO_TEMPLATE_SET) {
                     // first template found, set the value
                     $template_id = $meta_template_id;
                     $priority = $meta_priority;
@@ -96,7 +96,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
             }
         }
 
-        if($template_id !== $this->NO_TEMPLATE_SET) {
+        if($template_id !== self::NO_TEMPLATE_SET) {
             $template = $template_id;
         }
 
