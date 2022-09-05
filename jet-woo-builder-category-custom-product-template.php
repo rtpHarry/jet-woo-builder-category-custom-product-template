@@ -210,7 +210,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
     /**
      * Add the custom column to the taxonomy management page
      * 
-     * @since 2.1.0
+     * @since 1.1.0
      */
     public function manage_edit_columns( $columns ){
         $columns['product_template'] = __( 'Product Template', 'runthings_jetwoobuilder_category_template' );
@@ -221,7 +221,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
     /**
      * Add the custom column content to the taxonomy management page
      * 
-     * @since 2.1.0
+     * @since 1.1.0
      */
     public function manage_edit_columns_content_product_template( $content, $column_name, $term_id ){
         if( $column_name !== 'product_template' ){
@@ -243,7 +243,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
     /**
      * Add the custom column content to the taxonomy management page
      * 
-     * @since 2.1.0
+     * @since 1.1.0
      */
     public function manage_edit_columns_content_product_template_priority( $content, $column_name, $term_id ){
         if( $column_name !== 'product_template_priority' ){
@@ -263,7 +263,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
     /**
      * Enable sortable functionality for the custom columns
      * 
-     * @since 2.1.0
+     * @since 1.1.0
      * @source https://code.tutsplus.com/articles/quick-tip-make-your-custom-column-sortable--wp-25095
      */
     public function manage_sortable_columns( $sortable ){
@@ -275,7 +275,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
     /**
      * Modify ordervy query to support the sortable columns
      * 
-     * @since 2.1.0
+     * @since 1.1.0
      * @source https://wordpress.org/support/topic/sorting-by-custom-taxonomy-field/#post-14085241
      */
     function modify_orderby_query( $pieces, $taxonomies, $args ) {      
