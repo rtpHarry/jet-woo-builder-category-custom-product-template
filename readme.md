@@ -33,6 +33,12 @@ sort options, these terms will disappear from view. I plan to implement
 an activating hook in an upcoming version to fix this.
 
 # Changelog
+1.2.0 - 6 September 2022
+  - Bugfix - 500 error in some scenarios because global $product was
+    not yet defined
+  - Bugfix - Incorrect reference to self const in php code
+  - Bugfix - Wrong version number in jsdocs comments
+
 1.1.0 - 8 August 2022
   - Improve wording of field labels to clarify that it is the product 
     template being assigned.
