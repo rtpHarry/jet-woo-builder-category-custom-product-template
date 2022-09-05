@@ -64,8 +64,7 @@ class runthingsJetWooBuilderCategoryCustomProductTemplate {
             return $template;
         }
 
-        global $product;
-        $id = $product->get_id();
+        $id = get_the_ID();
 
         // check if custom template set on individual product
         if (get_post_meta( $id, '_jet_woo_template', true )) {
